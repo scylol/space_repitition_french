@@ -54,6 +54,20 @@ app.get('/api/users/:accessToken',  (req, res) => {
     });
 });
 
+//UPDATE/PUT user history
+app.put('/api/users/:accessToken', (req, res) => {
+  User
+    .findOneAndUpdate({accessToken: req.params.accessToken}, {score: [1, 2,3]})
+    .then(results => {
+      console.log(results);
+      res.json(results[0]).end();
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(400).json({error: 'Put request fail'});
+    });
+});
+
 
 passport.use(
     new GoogleStrategy({
