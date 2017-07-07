@@ -57,10 +57,17 @@ app.get('/api/users/:accessToken',  (req, res) => {
 //UPDATE/PUT user history
 app.put('/api/users/:googleId', (req, res) => {
   User
-    .findOneAndUpdate({googleId: req.params.googleId}, {$set:{ score:req.body.score}})
+  // .findOne({googleid: req.params.googleId})
+  // .exec()
+  // .then(user => {
+  //   console.log("this is the user" + user);
+  //   User.update({$set: {score:req.body.score}}, {new: true});
+  //   res.json(user).end();
+  // })
+    .findOneAndUpdate({googleId: req.params.googleId}, {$set:{ score:req.body.score}}, {new: true})
     .then(results => {
-      console.log(results);
-      res.json(results[0]).end();
+      console.log("result from put" + results);
+      res.json(results).end();
     })
     .catch(err => {
       console.log(err);

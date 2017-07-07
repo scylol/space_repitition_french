@@ -1,7 +1,7 @@
 import React from "react";
 import * as Cookies from "js-cookie";
 import { connect } from "react-redux";
-import { fetchQuestions, nextQuestion } from "../actions/actions";
+import { fetchQuestions, nextQuestion, updateScore } from "../actions/actions";
 import LinkedList from "../linkedList";
 
 export class QuestionPage extends React.Component {
@@ -35,11 +35,14 @@ export class QuestionPage extends React.Component {
 
   checkAnswer() {
     let linkedlist = this.state.myLinkedList;
-
+    const accessToken = Cookies.get('accessToken');
     let currentQuestion = linkedlist.get(this.state.index).question;
     console.log(this.state.value);
+    //console.log(this.state.value); === user's input
+    //console.log(this.state.index); === question's index
     console.log(linkedlist.get(this.state.index).answer);
 
+      this.props.dispatch(updateScore(accessToken));
     if (
       this.state.value.toLowerCase() ===
       linkedlist.get(this.state.index).answer.toLowerCase()

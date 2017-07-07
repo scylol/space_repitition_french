@@ -48,42 +48,21 @@ export const nextQuestion = (counter,boolean,numerator,denominator, currentQuest
   currentQuestion
 });
 
-export const FETCH_SCORE_REQUEST = 'FETCH_SCORE_REQUEST';
-export const fetchScoreRequest = user => ({
-  type: FETCH_SCORE_REQUEST,
+export const UPDATE_SCORE_REQUEST = 'UPDATE_SCORE_REQUEST';
+export const updateScoreRequest = user => ({
+  type: UPDATE_SCORE_REQUEST,
   user
 });
-export const FETCH_SCORE_SUCCESS = 'FETCH_SCORE_SUCCESS';
-export const fetchScoreSuccess = user => ({
-  type: FETCH_SCORE_SUCCESS,
+export const UPDATE_SCORE_SUCCESS = 'UPDATE_SCORE_SUCCESS';
+export const updateScoreSuccess = user => ({
+  type: UPDATE_SCORE_SUCCESS,
   user
 });
-export const FETCH_SCORE_ERROR = 'FETCH_SCORE_ERROR';
-export const fetchScoreError = user => ({
-  type: FETCH_SCORE_ERROR,
+export const UPDATE_SCORE_ERROR = 'UPDATE_SCORE_ERROR';
+export const updateScoreError = user => ({
+  type: UPDATE_SCORE_ERROR,
   user
 });
-
-
-export const fetchScore = (accessToken) => (dispatch) => {
-  dispatch(fetchScoreRequest());
-  fetch('/api/users/:accessToken', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
-    body: {scores: this.state.score}
-  }).then(res => {
-    if(!res.ok) {
-      return Promise.reject(res.statusText);
-    }
-    dispatch(fetchScoreSuccess(res));
-  }).catch(err => {
-    dispatch(fetchScoreError(err));
-  });
-};
-
 
 export const fetchQuestions = (accessToken) => (dispatch) => {
   dispatch(fetchQuestionsRequest());
@@ -127,4 +106,25 @@ export const fetchUser = (accessToken) => (dispatch) => {
   });
   
  
+};
+
+export const updateScore = (accessToken) => (dispatch, getState) => {
+  const state = getState();
+  console.log(state.score);
+  dispatch(updateScoreRequest());
+  fetch(`/api/users/${state.googleId.toString()}`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${accessToken}`
+    },
+    body: JSON.stringify({'score': state.score})
+  }).then(res => {
+    console.log(res);
+    if(!res.ok) {
+      return Promise.reject(res.statusText);
+    }
+    dispatch(updateScoreSuccess(res));
+  }).catch(err => {
+    dispatch(updateScoreError(err));
+  });
 };

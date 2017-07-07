@@ -1,6 +1,5 @@
 import {FETCH_QUESTIONS_REQUEST, FETCH_QUESTIONS_SUCCESS, FETCH_QUESTIONS_ERROR,
-FETCH_USER_REQUEST, FETCH_USER_SUCCESS, FETCH_USER_ERROR, NEXT_QUESTION, 
-FETCH_SCORE_REQUEST, FETCH_SCORE_SUCCESS, FETCH_SCORE_ERROR} from '../actions/actions';
+FETCH_USER_REQUEST, FETCH_USER_SUCCESS, FETCH_USER_ERROR, NEXT_QUESTION} from '../actions/actions';
 // import LinkedList from '../linkedList';
 
 const initialState = {
@@ -10,7 +9,8 @@ const initialState = {
   error: null,
   currentQuestion: 0,
   answeredCorrectly: null,
-  score: []
+  score: {},
+  googleId: null
 };
 
 
@@ -34,28 +34,20 @@ export default function reducer(state=initialState, action) {
   }
   else if(action.type === FETCH_USER_SUCCESS) {
       console.log(action.user)
-      return{...state, currentUser: action.user.name, loading: false, error: null}
+      return{...state, currentUser: action.user.name, loading: false, error: null, googleId: action.user.googleId, score: action.user.score}
   }
   else if(action.type === NEXT_QUESTION) {
     console.log(action.numerator)
+    console.log(action.denominator)
     if(!state.score.hasOwnProperty(action.currentQuestion)) {
       state.score[action.currentQuestion] = [0,0]
     }
+    else{
     state.score[action.currentQuestion][0] += action.numerator;
     state.score[action.currentQuestion][1] += action.denominator;
+}   
      return{...state, currentQuestion: action.counter, answeredCorrectly: action.boolean, score: {...state.score}}
   }
-  else if(action.type === FETCH_SCORE_REQUEST) {
-      return {...state, loading: true, error: null}
-  }
-  else if(action.type === FETCH_SCORE_ERROR) {
-       return {...state, loading: false, error: action.error}
-  }
-  else if(action.type === FETCH_SCORE_SUCCESS) {
-      console.log(action.user.score)
-      return{...state, currentUser: action.user.score, loading: false, error: null}
-  }
-
   return state;
 }
 
