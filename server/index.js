@@ -55,9 +55,9 @@ app.get('/api/users/:accessToken',  (req, res) => {
 });
 
 //UPDATE/PUT user history
-app.put('/api/users/:accessToken', (req, res) => {
+app.put('/api/users/:googleId', (req, res) => {
   User
-    .findOneAndUpdate({accessToken: req.params.accessToken}, {score: [1, 2,3]})
+    .findOneAndUpdate({googleId: req.params.googleId}, {$set:{ score:req.body.score}})
     .then(results => {
       console.log(results);
       res.json(results[0]).end();
