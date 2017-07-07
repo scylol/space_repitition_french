@@ -19,12 +19,14 @@ const userSchema = mongoose.Schema({
   name: {type: String, required: true},
   accessToken: {type: String, required: true},
   currentQuestion: {type: String},
-  score: {type: Array}
+  score: {type: {} }
 });
 
 userSchema.methods.apiRepr = function() {
   return {
-    name: this.name
+    name: this.name,
+    score: this.score
+    //score: this.score - will make the score acessible from a request 
   };
 };
 
