@@ -3,6 +3,7 @@ import * as Cookies from "js-cookie";
 import { connect } from "react-redux";
 import { fetchQuestions, nextQuestion } from "../actions/actions";
 import LinkedList from "../linkedList";
+import './question-page.css'
 
 export class QuestionPage extends React.Component {
   constructor() {
@@ -56,14 +57,18 @@ export class QuestionPage extends React.Component {
     if (this.props.questions.length <= 0) {
       return <div />;
     }
-    let feedback;
+    let feedback = (
+      <div className = 'feedback'>
+          <p>Good Luck Learning the beautiful languange of French!</p>
+      </div>
+    );
 
     if (this.props.answeredCorrectly === true) {
       let prevQuestion = this.props.score[this.state.myLinkedList.get(this.state.index - 1).question];
       let score = prevQuestion[0] / prevQuestion[1];
       let prevWord = this.state.myLinkedList.get(this.state.index - 1);
       feedback = (
-        <div>
+        <div className = 'feedback'>
           <p>Correct!!! Great Job!</p>
           <p>
             You have answered {prevWord.question} correctly{" "}
@@ -77,7 +82,7 @@ export class QuestionPage extends React.Component {
       let score = prevQuestion[0] / prevQuestion[1];
       let prevWord = this.state.myLinkedList.get(this.state.index - 1);
       feedback = (
-        <div>
+        <div className = 'feedback'>
           <p>
             Incorrect!!! The correct answer was {prevWord.answer}!!!
           </p>
@@ -91,18 +96,27 @@ export class QuestionPage extends React.Component {
 
     return (
       <div>
+      <div className='header'>
+        <h1>Welcome back {this.props.currentUser}!!!</h1>
+        <a href={'/api/auth/logout'} className='fake-button'>Logout</a>
+      </div>
+      <div className='main-content'>
         <ul className="question-list">
           <li>{this.state.myLinkedList.get(this.state.index).question}</li>
         </ul>
-        <button className="submit-button" onClick={this.checkAnswer}>
-          Submit
-        </button>
+        {feedback}
+        <div className='user-input'>
         <input
           type="text"
           value={this.state.value}
           onChange={this.handleChange}
         />
-        {feedback}
+        <button className="submit-button" onClick={this.checkAnswer}>
+          Submit
+        </button>
+        
+        </div>
+      </div>
       </div>
     );
   }
@@ -111,7 +125,8 @@ export class QuestionPage extends React.Component {
 const mapStateToProps = state => ({
   questions: state.questions,
   answeredCorrectly: state.answeredCorrectly,
-  score: state.score
+  score: state.score,
+  currentUser: state.currentUser
 });
 
 export default connect(mapStateToProps)(QuestionPage);

@@ -1,4 +1,5 @@
 import React from 'react';
+import './login-page.css';
 export default function LoginPage() {
     const text  = 'Welcome! Bienvenue!';
     return(
