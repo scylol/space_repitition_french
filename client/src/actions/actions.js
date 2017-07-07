@@ -48,6 +48,43 @@ export const nextQuestion = (counter,boolean,numerator,denominator, currentQuest
   currentQuestion
 });
 
+export const FETCH_SCORE_REQUEST = 'FETCH_SCORE_REQUEST';
+export const fetchScoreRequest = user => ({
+  type: FETCH_SCORE_REQUEST,
+  user
+});
+export const FETCH_SCORE_SUCCESS = 'FETCH_SCORE_SUCCESS';
+export const fetchScoreSuccess = user => ({
+  type: FETCH_SCORE_SUCCESS,
+  user
+});
+export const FETCH_SCORE_ERROR = 'FETCH_SCORE_ERROR';
+export const fetchScoreError = user => ({
+  type: FETCH_SCORE_ERROR,
+  user
+});
+
+
+export const fetchScore = (accessToken) => (dispatch) => {
+  dispatch(fetchScoreRequest());
+  fetch('/api/users/:accessToken', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: {scores: this.state.score}
+  }).then(res => {
+    if(!res.ok) {
+      return Promise.reject(res.statusText);
+    }
+    dispatch(fetchScoreSuccess(res));
+  }).catch(err => {
+    dispatch(fetchScoreError(err));
+  });
+};
+
+
 export const fetchQuestions = (accessToken) => (dispatch) => {
   dispatch(fetchQuestionsRequest());
   fetch('/api/questions', {
