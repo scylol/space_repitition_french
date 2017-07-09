@@ -91,3 +91,22 @@ export const fetchUser = (accessToken) => (dispatch) => {
   
  
 };
+
+export const updateScore = (accessToken) => (dispatch, getState) => {
+  const state = getState();
+  console.log(state.score);
+  fetch(`/api/users/${state.googleId.toString()}`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({'score': state.score})
+  }).then(res => {
+    console.log(res);
+    return res.json();
+  }).catch(err => {
+    console.log(err);
+  });
+};

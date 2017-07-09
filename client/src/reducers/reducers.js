@@ -7,7 +7,8 @@ const initialState = {
   loading: false,
   error: null,
   answeredCorrectly: null,
-  score: {}
+  score: {},
+  googleId: null
 };
 
 export default function reducer(state=initialState, action) {
@@ -28,7 +29,7 @@ export default function reducer(state=initialState, action) {
     return {...state, loading: false, error: action.error}
   }
   else if(action.type === FETCH_USER_SUCCESS) {
-    return{...state, currentUser: action.user.name, loading: false, error: null}
+    return{...state, currentUser: action.user.name, loading: false, error: null, googleId: action.user.googleId, score: action.user.score}
   }
   else if(action.type === NEXT_QUESTION) {
     let newScore;

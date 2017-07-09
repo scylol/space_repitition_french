@@ -54,6 +54,19 @@ app.get('/api/users/:accessToken',  (req, res) => {
     });
 });
 
+app.put('/api/users/:googleId', passport.authenticate('bearer', {session: false}), (req, res) => {
+  User
+    .findOneAndUpdate({googleId: req.params.googleId}, {$set:{ score:req.body.score}}, {new: true})
+    .then(results => {
+      console.log('result from put' + results);
+      res.json(results).end();
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(400).json({error: 'Put request fail'});
+    });
+});
+
 
 passport.use(
     new GoogleStrategy({

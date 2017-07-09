@@ -1,7 +1,7 @@
 import React from "react";
 import * as Cookies from "js-cookie";
 import { connect } from "react-redux";
-import { fetchQuestions, nextQuestion } from "../actions/actions";
+import { fetchQuestions, nextQuestion, updateScore } from "../actions/actions";
 import LinkedList from "../linkedList";
 import './question-page.css'
 
@@ -11,6 +11,7 @@ export class QuestionPage extends React.Component {
     this.componentDidMount = this.componentDidMount.bind(this);
     this.checkAnswer = this.checkAnswer.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.updateScoreinDatabase = this.updateScoreinDatabase.bind(this);
     this.state = {
       myLinkedList: new LinkedList(),
       index: 0,
@@ -35,6 +36,7 @@ export class QuestionPage extends React.Component {
     let linkedlist = this.state.myLinkedList;
     let index = this.state.index;
     let currentQuestion = linkedlist.get(index).question;
+    const accessToken = Cookies.get('accessToken');
 
     if (this.state.value.toLowerCase() === linkedlist.get(index).answer.toLowerCase()) {
       linkedlist.insert(linkedlist.length, linkedlist.get(index));
@@ -47,8 +49,9 @@ export class QuestionPage extends React.Component {
       this.props.dispatch(nextQuestion(index + 1, false, 0, 1, currentQuestion));
       this.setState({ value: "" });
     }
+    this.props.dispatch(updateScore(accessToken));
   }
-
+  
   handleChange(event) {
     this.setState({ value: event.target.value });
   }
@@ -74,6 +77,7 @@ export class QuestionPage extends React.Component {
             You have answered {prevWord.question} correctly{" "}
             {(score * 100).toFixed(0)}% of the time!
           </p>
+         
         </div>
       );
     }
@@ -90,6 +94,7 @@ export class QuestionPage extends React.Component {
             You have answered {prevWord.question} correctly{" "}
             {(score * 100).toFixed(0)}% of the time!
           </p>
+          
         </div>
       );
     }
@@ -116,6 +121,7 @@ export class QuestionPage extends React.Component {
         </button>
         
         </div>
+        
       </div>
       </div>
     );
