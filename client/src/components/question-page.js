@@ -32,12 +32,16 @@ export class QuestionPage extends React.Component {
     }
   }
 
+  updateScoreinDatabase() {
+    const accessToken = Cookies.get('accessToken');
+    this.props.dispatch(updateScore(accessToken));
+  }
+  
   checkAnswer() {
     let linkedlist = this.state.myLinkedList;
     let index = this.state.index;
     let currentQuestion = linkedlist.get(index).question;
-    const accessToken = Cookies.get('accessToken');
-
+    
     if (this.state.value.toLowerCase() === linkedlist.get(index).answer.toLowerCase()) {
       linkedlist.insert(linkedlist.length, linkedlist.get(index));
       this.setState({ index: index + 1 });
@@ -49,7 +53,7 @@ export class QuestionPage extends React.Component {
       this.props.dispatch(nextQuestion(index + 1, false, 0, 1, currentQuestion));
       this.setState({ value: "" });
     }
-    this.props.dispatch(updateScore(accessToken));
+     this.updateScoreinDatabase();
   }
   
   handleChange(event) {

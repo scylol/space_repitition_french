@@ -76,7 +76,9 @@ passport.use(
     },
     (accessToken, refreshToken, profile, cb) => {
       User.find({googleId: profile.id}, function(err, user){
+        console.log('inside passport', accessToken);
         if(!user.length) {
+          console.log('inside if passport', accessToken);
           User.create({
             googleId: profile.id,
             name:profile.displayName,
@@ -85,6 +87,7 @@ passport.use(
             return cb(null, user);
           });
         } else {
+          console.log(user);
           return cb(null, user);
         }
       });

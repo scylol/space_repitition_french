@@ -86,6 +86,7 @@ export const fetchUser = (accessToken) => (dispatch) => {
     console.log(user);
     dispatch(fetchUserSuccess(user));
   }).catch(error => {
+    console.log(error);
     dispatch(fetchUserError(error));
   });
   
