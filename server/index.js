@@ -55,7 +55,7 @@ app.get('/api/users/:accessToken',  (req, res) => {
 });
 
 //UPDATE/PUT user history
-app.put('/api/users/:googleId', (req, res) => {
+app.put('/api/users/:googleId', passport.authenticate('bearer', {session: false}), (req, res) => {
   User
   // .findOne({googleid: req.params.googleId})
   // .exec()
@@ -66,7 +66,7 @@ app.put('/api/users/:googleId', (req, res) => {
   // })
     .findOneAndUpdate({googleId: req.params.googleId}, {$set:{ score:req.body.score}}, {new: true})
     .then(results => {
-      console.log("result from put" + results);
+      console.log('result from put' + results);
       res.json(results).end();
     })
     .catch(err => {

@@ -10,6 +10,7 @@ export class QuestionPage extends React.Component {
     this.componentDidMount = this.componentDidMount.bind(this);
     this.checkAnswer = this.checkAnswer.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.updateScoreinDatabase = this.updateScoreinDatabase.bind(this);
     this.state = {
       myLinkedList: new LinkedList(),
       index: 0,
@@ -42,7 +43,7 @@ export class QuestionPage extends React.Component {
     //console.log(this.state.index); === question's index
     console.log(linkedlist.get(this.state.index).answer);
 
-      this.props.dispatch(updateScore(accessToken));
+     
     if (
       this.state.value.toLowerCase() ===
       linkedlist.get(this.state.index).answer.toLowerCase()
@@ -60,6 +61,12 @@ export class QuestionPage extends React.Component {
       this.props.dispatch(nextQuestion(this.state.index + 1, false, 0, 1, currentQuestion));
       this.setState({ value: "" });
     }
+     
+  }
+
+  updateScoreinDatabase() {
+    const accessToken = Cookies.get('accessToken');
+    this.props.dispatch(updateScore(accessToken));
   }
 
   handleChange(event) {
@@ -85,6 +92,9 @@ export class QuestionPage extends React.Component {
             value={this.state.value}
             onChange={this.handleChange}
           />
+          <button className="submit-button" onClick={this.updateScoreinDatabase}>
+          Push to Database
+        </button>
           <p>Correct!!! Great Job!</p>
           
         </div>
@@ -104,7 +114,10 @@ export class QuestionPage extends React.Component {
             value={this.state.value}
             onChange={this.handleChange}
           />
-          <p>Incorrect!!! The correct answer was {this.state.myLinkedList.get(this.props.currentQuestion-1).answer}!!!</p>
+          <button className="submit-button" onClick={this.updateScoreinDatabase}>
+          Push to Database
+        </button>
+           <p>Incorrect!!! The correct answer was {this.state.myLinkedList.get(this.props.currentQuestion-1).answer}!!!</p>
         </div>
       );
     }
@@ -122,6 +135,9 @@ export class QuestionPage extends React.Component {
           value={this.state.value}
           onChange={this.handleChange}
         />
+        <button className="submit-button" onClick={this.updateScoreinDatabase}>
+          Push to Database
+        </button>
       </div>
     );
   }
