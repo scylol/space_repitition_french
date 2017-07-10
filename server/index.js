@@ -67,9 +67,9 @@ passport.use(
       callbackURL: '/api/auth/google/callback'
     },
     (accessToken, refreshToken, profile, cb) => {
-      User.find({googleId: profile.id}, function(err, user){
+      User.findOne({googleId: profile.id}, function(err, user){
         console.log('inside passport', accessToken);
-        if(!user.length) {
+        if(!user) {
           console.log('inside if passport', accessToken);
           User.create({
             googleId: profile.id,
@@ -79,8 +79,10 @@ passport.use(
             return cb(null, user);
           });
         } else {
-          console.log(user);
-          return cb(null, user);
+          User.findOneAndUpdate({googleId: profile.id}, {accessToken}, {new: true}, function(err, user){
+            return cb(null, user);
+          });
+          
         }
       });
     }
@@ -91,8 +93,8 @@ passport.use(
 passport.use(
     new BearerStrategy(
         (token, done) => {
-          User.find({accessToken: token}, function(err, user){
-            if(!user.length) {
+          User.findOne({accessToken: token}, function(err, user){
+            if(!user) {
               return done(null, false);
             }
             console.log('UserToken',user);
