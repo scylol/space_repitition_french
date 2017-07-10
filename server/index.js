@@ -41,17 +41,9 @@ app.get('/api/questions', passport.authenticate('bearer', {session: false}), (re
     });
 });
 
-app.get('/api/users/:accessToken',  (req, res) => {
-  User
-    .findOne({accessToken: req.params.accessToken})
-    .then(user =>{
-      console.log(user);
-      return res.json(user);
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json({error: 'Something went wrong!!!'});
-    });
+app.get('/api/me', passport.authenticate('bearer', {session: false}),(req, res) => {
+  console.log(req.user);
+  return res.json(req.user);
 });
 
 app.put('/api/users/:googleId', passport.authenticate('bearer', {session: false}), (req, res) => {
@@ -93,6 +85,8 @@ passport.use(
       });
     }
 ));
+//Need to update the access token after logging in
+//
 
 passport.use(
     new BearerStrategy(
@@ -117,6 +111,7 @@ app.get('/api/auth/google/callback',
       session: false
     }),
     (req, res) => {
+      console.log('req.user', req.user);
       res.cookie('accessToken', req.user.accessToken, {expires: 0});
       res.redirect('/');
     }

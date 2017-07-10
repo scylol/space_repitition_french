@@ -67,8 +67,9 @@ export const fetchQuestions = (accessToken) => (dispatch) => {
 };
 
 export const fetchUser = (accessToken) => (dispatch) => {
+  console.log('accessToken', accessToken);
   dispatch(fetchUserRequest());
-  fetch(`/api/users/${accessToken}`, {
+  fetch('/api/me', {
     headers: {
       'Authorization': `Bearer ${accessToken}`
     }
