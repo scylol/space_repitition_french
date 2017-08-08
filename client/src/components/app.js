@@ -14,9 +14,7 @@ class App extends React.Component {
 
     componentDidMount() {
         const accessToken = Cookies.get('accessToken');
-        console.log(accessToken)
-        console.log('type of', typeof accessToken)
-        if(accessToken) {
+         if(accessToken) {
             this.props.dispatch(fetchUser(accessToken));
         }
     }
@@ -28,11 +26,6 @@ class App extends React.Component {
 
         return <QuestionPage />;
     }
-    //  render() {
-    //     if (!this.props.currentUser===null) return <LoginPage />;
-        
-    //     return <QuestionPage />;
-    // }
 }
 
 const mapStateToProps = (state)=>({

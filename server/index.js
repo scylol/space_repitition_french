@@ -9,11 +9,7 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 const {DATABASE_URL, PORT} = process.env;
 const {Question, User} = require('./models');
-// const {DATABASE_URL, PORT} = require('../config');
-// mongoose.connect(DATABASE_URL,function(err){
-//   if(err) console.log('Something wrong with mongoose connection');
-//   console.log('MLab connected!');
-// });
+
 let secret = {
   CLIENT_ID: process.env.CLIENT_ID,
   CLIENT_SECRET: process.env.CLIENT_SECRET
@@ -42,7 +38,6 @@ app.get('/api/questions', passport.authenticate('bearer', {session: false}), (re
 });
 
 app.get('/api/me', passport.authenticate('bearer', {session: false}),(req, res) => {
-  console.log(req.user);
   return res.json(req.user);
 });
 
@@ -50,7 +45,6 @@ app.put('/api/users/:googleId', passport.authenticate('bearer', {session: false}
   User
     .findOneAndUpdate({googleId: req.params.googleId}, {$set:{ score:req.body.score}}, {new: true})
     .then(results => {
-      console.log('result from put' + results);
       res.json(results).end();
     })
     .catch(err => {
@@ -68,9 +62,7 @@ passport.use(
     },
     (accessToken, refreshToken, profile, cb) => {
       User.findOne({googleId: profile.id}, function(err, user){
-        console.log('inside passport', accessToken);
         if(!user) {
-          console.log('inside if passport', accessToken);
           User.create({
             googleId: profile.id,
             name:profile.displayName,
@@ -87,8 +79,7 @@ passport.use(
       });
     }
 ));
-//Need to update the access token after logging in
-//
+
 
 passport.use(
     new BearerStrategy(
@@ -97,7 +88,6 @@ passport.use(
             if(!user) {
               return done(null, false);
             }
-            console.log('UserToken',user);
             return done(null, user);
           });
         }
@@ -113,7 +103,6 @@ app.get('/api/auth/google/callback',
       session: false
     }),
     (req, res) => {
-      console.log('req.user', req.user);
       res.cookie('accessToken', req.user.accessToken, {expires: 0});
       res.redirect('/');
     }
@@ -136,30 +125,8 @@ app.get(/^(?!\/api(\/|$))/, (req, res) => {
 });
 
 let server;
-// function runServer(port=3001) {
-//   return new Promise((resolve, reject) => {
-//     server = app.listen(port, () => {
-//       resolve();
-//     }).on('error', reject);
-//   });
-// }
-
-// function closeServer() {
-//   return new Promise((resolve, reject) => {
-//     server.close(err => {
-//       if (err) {
-//         return reject(err);
-//       }
-//       resolve();
-//     });
-//   });
-// }
-
-
 
 function runServer(databaseUrl=DATABASE_URL, port=PORT) {
-  console.log(databaseUrl);
-  console.log(DATABASE_URL);
   return new Promise((resolve, reject) => {
     mongoose.connect(databaseUrl, err => {
       if (err) {

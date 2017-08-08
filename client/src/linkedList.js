@@ -38,20 +38,7 @@ export default class LinkedList {
     return node;
   }
 
-  // iterate() {
-  //   let result = [];
-  //   let node = this.head;
-  //   for (let i=0; i<this.length; i++) {
-  //     result.push(node.value);
-  //     node = node.next;
-  //   }
-  //   return result;
-  // }
 
-  // getValue(index){
-  //   let result = this.iterate();
-  //   return result[index];
-  // }
   
   get(index) {
     //error handling  
@@ -83,12 +70,3 @@ export default class LinkedList {
 
 }
 
-// let myList = new LinkedList();
-
-// myList.insert(0,1);
-// myList.insert(1,2);
-// myList.insert(2,3);
-// myList.insert(3,4);
-// myList.insert(4,5);
-
-// console.log(myList);

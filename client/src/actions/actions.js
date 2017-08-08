@@ -67,14 +67,12 @@ export const fetchQuestions = (accessToken) => (dispatch) => {
 };
 
 export const fetchUser = (accessToken) => (dispatch) => {
-  console.log('accessToken', accessToken);
   dispatch(fetchUserRequest());
   fetch('/api/me', {
     headers: {
       'Authorization': `Bearer ${accessToken}`
     }
   }).then(res => {
-    console.log('RES', res);
     if(!res.ok) {
       if(res.status === 401) {
         Cookies.remove('accessToken');
@@ -84,7 +82,6 @@ export const fetchUser = (accessToken) => (dispatch) => {
     }
     return res.json();
   }).then(user => {
-    console.log(user);
     dispatch(fetchUserSuccess(user));
   }).catch(error => {
     console.log(error);
@@ -96,7 +93,6 @@ export const fetchUser = (accessToken) => (dispatch) => {
 
 export const updateScore = (accessToken) => (dispatch, getState) => {
   const state = getState();
-  console.log(state.score);
   fetch(`/api/users/${state.googleId.toString()}`, {
     method: 'PUT',
     headers: {
@@ -106,7 +102,6 @@ export const updateScore = (accessToken) => (dispatch, getState) => {
     },
     body: JSON.stringify({'score': state.score})
   }).then(res => {
-    console.log(res);
     return res.json();
   }).catch(err => {
     console.log(err);

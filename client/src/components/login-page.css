@@ -1,3 +1,25 @@
 .login {
     padding-left: 25px;
 }
+
+.login-button {
+    width: 150px;
+    align-self: center;
+    
+    background-color: #841F27;
+    border: none;
+    padding: 15px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    width: 50%;
+    height: 50%;
+}
