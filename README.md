@@ -1,4 +1,4 @@
-# Omelette du Fromage
+[![omelette](https://user-images.githubusercontent.com/25944411/29145280-7f92d9b0-7d2a-11e7-86e7-d5a8d2ce940a.png)](http://immense-sea-17749.herokuapp.com/)
 
 ## Why Omelette du Fromage
 If you have ever had the itch to learn another language, look not further. The reason why our app is so great for learning French is because it uses a Spaced Repitition algorithm to enchance your learning. What this means essentially is you will see the words you get incorrect more frequently, so you will be able to review and repeat these words so you can improve were you struggle the most.
