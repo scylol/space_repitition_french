@@ -1,4 +1,5 @@
-#Omelette du Fromage
+# Omelette du Fromage
+
 ## Why Omelette du Fromage
 If you have ever had the itch to learn another language, look not further. The reason why our app is so great for learning French is because it uses a Spaced Repitition algorithm to enchance your learning. What this means essentially is you will see the words you get incorrect more frequently, so you will be able to review and repeat these words so you can improve were you struggle the most.
 
