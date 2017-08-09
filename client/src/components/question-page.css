@@ -1,5 +1,3 @@
-
-
 .main-content {
     display: flex;
     justify-content: space-between;
@@ -26,8 +24,9 @@
     border: 1px solid #841F27;
     padding: 36px;
     border-radius: 25px;
-     min-width: 20%;
-     background-color: #841F27;
+    min-width: 20%;
+    background-color: #841F27;
+    text-align: center;
 }
 
 .submit-button {
@@ -60,13 +59,31 @@ input {
 
 .header {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
     padding: 25px;
+    text-align: center;
+}
+
+.greeting-div {
+     width: 100%;
+     text-align: center;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+ 
+.header h2 {
+    font-size: 30px;
 }
 
 .header h1 {
-    padding-right: 25px;
+    font-size: 56px;
 }
 
 .logout-button {
@@ -79,6 +96,11 @@ input {
     color: white;
     font-weight: bold;
     cursor: pointer;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
 }
 
 /*Media Queries */
@@ -98,17 +120,5 @@ input {
     .user-input {
         min-width: 50%;
     }
-
 }
 
-@media (max-width: 576px) {
-  .header {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      text-align: center;
-    }
-    .header h1 {
-        margin-bottom: 15px;
-    }
-}

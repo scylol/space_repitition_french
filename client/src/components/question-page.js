@@ -40,7 +40,8 @@ export class QuestionPage extends React.Component {
     this.props.dispatch(updateScore(accessToken));
   }
 
-  checkAnswer() {
+  checkAnswer(e) {
+    e.preventDefault();
     let linkedlist = this.state.myLinkedList;
     let index = this.state.index;
     let currentQuestion = linkedlist.get(index).question;
@@ -89,7 +90,7 @@ export class QuestionPage extends React.Component {
           <p>Correct!!! Great Job!</p>
           <p>
             You have answered {prevWord.question} correctly{" "}
-            {(score * 100).toFixed(0)}% of the time!
+            <b>{(score * 100).toFixed(0)}%</b> of the time!
           </p>
         </div>
       );
@@ -103,11 +104,11 @@ export class QuestionPage extends React.Component {
       feedback = (
         <div className="feedback">
           <p>
-            Incorrect!!! The correct answer was {prevWord.answer}!!!
+            Incorrect!!! The correct answer was <b>{prevWord.answer}</b>!!!
           </p>
           <p>
             You have answered {prevWord.question} correctly{" "}
-            {(score * 100).toFixed(0)}% of the time!
+            <b>{(score * 100).toFixed(0)}%</b> of the time!
           </p>
         </div>
       );
@@ -116,12 +117,18 @@ export class QuestionPage extends React.Component {
     return (
       <div className="container-div">
         <div className="header">
-          <h1>
-            Welcome Back {this.props.currentUser}!!!
-          </h1>
-          <a href={"/api/auth/logout"}>
-            <button className="logout-button">Logout</button>
-          </a>
+          <div className="title">
+          <h1>Omelette du Fromage</h1>
+          
+          </div>
+          <div className="greeting-div">
+            <h2>
+              Welcome Back {this.props.currentUser}!!!
+            </h2>
+            <a href={"/api/auth/logout"}>
+              <button className="logout-button">Logout</button>
+            </a>
+          </div>
         </div>
         <div className="main-content">
           <div className="question-list">
@@ -131,14 +138,21 @@ export class QuestionPage extends React.Component {
           </div>
           {feedback}
           <div className="user-input">
-            <input
-              type="text"
-              value={this.state.value}
-              onChange={this.handleChange}
-            />
-            <button className="submit-button" onClick={this.checkAnswer}>
-              Submit
-            </button>
+            <form>
+              <input
+                type="text"
+                value={this.state.value}
+                onChange={this.handleChange}
+              />
+              <input
+                className="submit-button"
+                type="submit"
+                value="Submit"
+                onClick={e => {
+                  this.checkAnswer(e);
+                }}
+              />
+            </form>
           </div>
         </div>
       </div>
