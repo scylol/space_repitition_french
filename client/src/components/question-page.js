@@ -118,42 +118,48 @@ export class QuestionPage extends React.Component {
       <div className="container-div">
         <div className="header">
           <div className="title">
-          <h1>Omelette du Fromage</h1>
-          
+            <h1>Omelette du Fromage</h1>
           </div>
           <div className="greeting-div">
             <h2>
-              Welcome Back {this.props.currentUser}!!!
+              Welcome back, {this.props.currentUser}!
             </h2>
             <a href={"/api/auth/logout"}>
-              <button className="logout-button">Logout</button>
-            </a>
+            <button className="logout-button">Logout</button>
+          </a>
           </div>
         </div>
         <div className="main-content">
-          <div className="question-list">
-            <p>
-              {this.state.myLinkedList.get(this.state.index).question}
-            </p>
-          </div>
           {feedback}
-          <div className="user-input">
-            <form>
-              <input
-                type="text"
-                value={this.state.value}
-                onChange={this.handleChange}
-              />
-              <input
-                className="submit-button"
-                type="submit"
-                value="Submit"
-                onClick={e => {
-                  this.checkAnswer(e);
-                }}
-              />
-            </form>
+          <div className="sub-content">
+            <div className="question-list">
+              <p className="language">French</p>
+              <p className='french-word'>
+                {this.state.myLinkedList.get(this.state.index).question}
+              </p>
+            </div>
+
+            <div className="user-input">
+              <p className="language">English</p>
+              <form id="myForm">
+                <input
+                  type="text"
+                  value={this.state.value}
+                  onChange={this.handleChange}
+                />
+              </form>
+            </div>
           </div>
+          <input
+            className="submit-button"
+            type="submit"
+            value="Submit"
+            onClick={e => {
+              this.checkAnswer(e);
+            }}
+            form="myForm"
+          />
+          
         </div>
       </div>
     );

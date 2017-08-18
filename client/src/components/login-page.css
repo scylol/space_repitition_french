@@ -2,22 +2,64 @@
     padding: 25px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     font-size: 24px;
+    align-items: center;
 }
 
 .login h1 {
     font-size: 56px;
+    text-align: center;
+}
+
+.login a {
+    text-align: center;
+}
+
+.login p {
+    width: 40%;
 }
 
 .login-button {
-    width: 150px;
+    width: 200px;
+    font-size: 18px;
+    margin-top: 50px;
     align-self: center;
-    background-color: #841F27;
+    background-color: #e85a42;
     border: none;
     padding: 15px;
     border-radius: 5px;
     color: white;
-    font-weight: bold;
+    font-weight: 400;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-button:hover, .login-button:focus, .login-button:active {
+    background-color: #1a5c88;
+}
+
+/*Media Queries */
+
+@media (max-width: 1500px) {
+    .login p {
+        width: 50%;
+    }
+}
+
+@media (max-width: 1200px) {
+  .login p {
+        width: 50%;
+    }
+}
+
+@media (max-width: 992px) {
+  .login p {
+        width: 70%;
+    }
+}
+
+@media (max-width: 576px) {
+  .login p {
+        width: 85%;
+    }
 }
